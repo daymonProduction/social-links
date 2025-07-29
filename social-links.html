@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daymon | My Socials</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --accent: #5DF500;
+      --accent-dark: #4ac000;
+      --bg: #0d0d0d;
+      --card-bg: #161616;
+      --text: #f5f5f5;
+      --text-secondary: #b0b0b0;
+      --shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+      --border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    .nickname {
+  position: absolute;
+  top: 20px;
+  left: 20px; /* изменено с right: 20px */
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 500;
+  font-size: 1.5rem;
+  color: var(--accent);
+  text-shadow: 0 0 10px rgba(93, 245, 0, 0.5);
+  animation: glow 2s ease-in-out infinite alternate;
+  z-index: 10;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  background: rgba(93, 245, 0, 0.05);
+  border: 1px solid rgba(93, 245, 0, 0.2);
+}
+
+
+    @keyframes glow {
+      from {
+        text-shadow: 0 0 5px var(--accent), 0 0 10px rgba(93, 245, 0, 0.5);
+      }
+      to {
+        text-shadow: 0 0 10px var(--accent), 0 0 20px rgba(93, 245, 0, 0.7);
+      }
+    }
+
+    .card {
+      background-color: var(--card-bg);
+      border-radius: 20px;
+      width: 100%;
+      max-width: 480px;
+      padding: 2.5rem 2rem;
+      box-shadow: var(--shadow);
+      border: var(--border);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    @media (min-width: 768px) {
+  .card {
+    padding: 3rem 2.5rem;
+    max-width: 520px;
+  }
+
+  .nickname {
+    font-size: 1.8rem;
+    top: 30px;
+    left: 30px; /* было right: 30px */
+  }
+}
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .title {
+      font-size: clamp(1.8rem, 5vw, 2.2rem);
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(90deg, var(--accent), #a2f500);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: -0.5px;
+      line-height: 1.2;
+    }
+
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: clamp(0.95rem, 3vw, 1.05rem);
+      font-weight: 400;
+      margin: 0 auto;
+      max-width: 320px;
+    }
+
+    .language-switcher {
+      display: flex;
+      justify-content: right;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .language-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 500;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .language-btn.active {
+      background: rgba(93, 245, 0, 0.15);
+      color: var(--accent);
+    }
+
+    .language-btn:not(.active):hover {
+      color: var(--text);
+    }
+
+    .social-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      width: 100%;
+      margin-bottom: 2rem;
+    }
+
+    .social-button {
+      background-color: rgba(93, 245, 0, 0.08);
+      border: 1px solid rgba(93, 245, 0, 0.3);
+      border-radius: 14px;
+      padding: 1.1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem; /* Увеличенный отступ между иконкой и текстом */
+      color: var(--text);
+      text-decoration: none;
+      font-size: 1.1rem;
+      font-weight: 500;
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(4px);
+    }
+
+    .social-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, rgba(93, 245, 0, 0.1), transparent);
+      transform: translateX(-100%);
+      transition: transform 0.4s ease;
+    }
+
+    .social-button:hover {
+      background-color: rgba(93, 245, 0, 0.15);
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(93, 245, 0, 0.1);
+    }
+
+    .social-button:hover::before {
+      transform: translateX(0);
+    }
+
+    .social-button:active {
+      transform: translateY(0);
+      background-color: rgba(93, 245, 0, 0.2);
+    }
+
+    .social-icon {
+      width: 24px;
+      height: 24px;
+      object-fit: contain;
+      filter: brightness(1.2);
+      transition: transform 0.3s ease;
+      flex-shrink: 0;
+    }
+
+    .social-button:hover .social-icon {
+      transform: scale(1.15);
+    }
+
+    .social-button span {
+      flex-grow: 1;
+      text-align: left;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      padding-right: 10px; /* Добавлен отступ справа */
+    }
+
+    footer {
+      text-align: center;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    .footer-text {
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .footer-text.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .highlight {
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .pulse {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background-color: var(--accent);
+      border-radius: 50%;
+      margin-right: 8px;
+      animation: pulse 1.8s infinite;
+      vertical-align: middle;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(0.95); opacity: 1; }
+      50% { transform: scale(1.2); opacity: 0.7; }
+      100% { transform: scale(0.95); opacity: 1; }
+    }
+
+    .ripple {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ripple:after {
+      content: "";
+      display: block;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      background-image: radial-gradient(circle, var(--accent) 10%, transparent 10.01%);
+      background-repeat: no-repeat;
+      background-position: 50%;
+      transform: scale(10, 10);
+      opacity: 0;
+      transition: transform .5s, opacity 1s;
+    }
+
+    .ripple:active:after {
+      transform: scale(0, 0);
+      opacity: 0.3;
+      transition: 0s;
+    }
+
+    .corner-decoration {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      border: 2px solid var(--accent);
+      opacity: 0.3;
+    }
+
+    .corner-tl {
+      top: 10px;
+      left: 10px;
+      border-right: none;
+      border-bottom: none;
+      border-radius: 8px 0 0 0;
+    }
+
+    .corner-tr {
+      top: 10px;
+      right: 10px;
+      border-left: none;
+      border-bottom: none;
+      border-radius: 0 8px 0 0;
+    }
+
+    .corner-bl {
+      bottom: 10px;
+      left: 10px;
+      border-right: none;
+      border-top: none;
+      border-radius: 0 0 0 8px;
+    }
+
+    .corner-br {
+      bottom: 10px;
+      right: 10px;
+      border-left: none;
+      border-top: none;
+      border-radius: 0 0 8px 0;
+    }
+  </style>
+</head>
+<body>
+  
+  
+  <div class="card">
+    
+    <div class="nickname">Daymon</div>
+
+    <div class="corner-decoration corner-tl"></div>
+    <div class="corner-decoration corner-tr"></div>
+    <div class="corner-decoration corner-bl"></div>
+    <div class="corner-decoration corner-br"></div>
+    
+    <header>
+      <div class="language-switcher">
+        <button class="language-btn active" data-lang="ru">RU</button>
+        <button class="language-btn" data-lang="en">EN</button>
+      </div>
+      <h1 class="title" data-i18n="title">Мои соцсети</h1>
+      <p class="subtitle" data-i18n="subtitle">Давай оставаться на связи! Выбирай удобную платформу</p>
+    </header>
+
+    <div class="social-links">
+      <a href="https://t.me/DaymonShow" class="social-button ripple">
+        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="Telegram" class="social-icon">
+        <span data-i18n="telegram">Telegram</span>
+      </a>
+
+      <a href="https://www.twitch.tv/damonzavoz" class="social-button ripple">
+        <img src="https://cdn-icons-png.flaticon.com/512/5968/5968819.png" alt="Twitch" class="social-icon">
+        <span data-i18n="twitch">Twitch</span>
+      </a>
+
+      <a href="https://www.youtube.com/@daymonshow" class="social-button ripple">
+        <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube" class="social-icon">
+        <span data-i18n="youtube">YouTube</span>
+      </a>
+
+      <a href="https://www.tiktok.com/@da1mon77" class="social-button ripple">
+        <img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png" alt="TikTok" class="social-icon">
+        <span data-i18n="tiktok1">TikTok (личный)</span>
+      </a>
+
+      <a href="https://www.tiktok.com/@daymonshow" class="social-button ripple">
+        <img src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png" alt="TikTok" class="social-icon">
+        <span data-i18n="tiktok2">TikTok (творческий)</span>
+      </a>
+
+      <a href="https://www.instagram.com/daymonshow/" class="social-button ripple">
+        <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="Instagram" class="social-icon">
+        <span data-i18n="instagram">Instagram</span>
+      </a>
+
+      <a href="https://vk.com/nik_da1mon7" class="social-button ripple">
+        <img src="https://cdn-icons-png.flaticon.com/512/145/145813.png" alt="VK" class="social-icon">
+        <span data-i18n="vk">ВКонтакте</span>
+      </a>
+    </div>
+
+    <footer>
+      <div class="footer-text show" data-lang="ru">
+        <p><span class="pulse"></span> <span class="highlight">Не стесняйся</span> писать — всегда рад общению!</p>
+        <p>Давай сделаем интернет чуть дружелюбнее ❤️</p>
+      </div>
+      <div class="footer-text" data-lang="en">
+        <p><span class="pulse"></span> <span class="highlight">Don't hesitate</span> to message me — always happy to chat!</p>
+        <p>Let's make the internet a bit friendlier ❤️</p>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const languageBtns = document.querySelectorAll('.language-btn');
+      const elementsToTranslate = document.querySelectorAll('[data-i18n]');
+      const footerTexts = document.querySelectorAll('.footer-text');
+      
+      // Language data
+      const translations = {
+        'ru': {
+          'title': 'Мои соцсети',
+          'subtitle': 'Давай оставаться на связи! Выбирай удобную платформу',
+          'telegram': 'Telegram',
+          'twitch': 'Twitch',
+          'youtube': 'YouTube',
+          'tiktok1': 'TikTok (личный)',
+          'tiktok2': 'TikTok (творческий)',
+          'instagram': 'Instagram',
+          'vk': 'ВКонтакте'
+        },
+        'en': {
+          'title': 'My Socials',
+          'subtitle': 'Let\'s stay connected! Choose your preferred platform',
+          'telegram': 'Telegram',
+          'twitch': 'Twitch',
+          'youtube': 'YouTube',
+          'tiktok1': 'TikTok (personal)',
+          'tiktok2': 'TikTok (creative)',
+          'instagram': 'Instagram',
+          'vk': 'VKontakte'
+        }
+      };
+
+      // Switch language function
+      function switchLanguage(lang) {
+        // Update content
+        elementsToTranslate.forEach(el => {
+          const key = el.getAttribute('data-i18n');
+          el.textContent = translations[lang][key];
+        });
+        
+        // Update footer visibility
+        footerTexts.forEach(text => {
+          text.classList.remove('show');
+          if (text.getAttribute('data-lang') === lang) {
+            setTimeout(() => text.classList.add('show'), 10);
+          }
+        });
+        
+        // Update active button
+        languageBtns.forEach(btn => {
+          btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+        });
+      }
+
+      // Button click event
+      languageBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          const lang = this.getAttribute('data-lang');
+          switchLanguage(lang);
+        });
+      });
+
+      // Ripple effect for buttons
+      const buttons = document.querySelectorAll('.ripple');
+      buttons.forEach(button => {
+        button.addEventListener('click', function(e) {
+          // Remove any existing ripple
+          const existingRipple = this.querySelector('.ripple-effect');
+          if (existingRipple) {
+            existingRipple.remove();
+          }
+
+          // Create new ripple
+          const rect = this.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          
+          const ripple = document.createElement('span');
+          ripple.classList.add('ripple-effect');
+          ripple.style.left = `${x}px`;
+          ripple.style.top = `${y}px`;
+          
+          this.appendChild(ripple);
+          
+          setTimeout(() => {
+            ripple.remove();
+          }, 800);
+        });
+      });
+      
+      // Инициализация языка по умолчанию
+      switchLanguage('ru');
+    });
+  </script>
+</body>
+</html>
